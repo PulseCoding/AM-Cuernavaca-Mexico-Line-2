@@ -8,24 +8,24 @@ var MonoblockWait  = null,
     CntRejCapper = null,
     WaitCapper = null,
     eol = null;
-var TableSupplierct = null,
-    TableSupplierresults = null,
-    CntInTableSupplier = null,
-    CntOutTableSupplier = null,
-    TableSupplieractual = 0,
-    TableSuppliertime = 0,
-    TableSuppliersec = 0,
-    TableSupplierflagStopped = false,
-    TableSupplierstate = 0,
-    TableSupplierspeed = 0,
-    TableSupplierspeedTemp = 0,
-    TableSupplierflagPrint = 0,
-    TableSuppliersecStop = 0,
-    TableSupplierdeltaRejected = null,
-    TableSupplierONS = false,
-    TableSuppliertimeStop = 60, //NOTE: Timestop
-    TableSupplierWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
-    TableSupplierflagRunning = false;
+var TableSuplierct = null,
+    TableSuplierresults = null,
+    CntInTableSuplier = null,
+    CntOutTableSuplier = null,
+    TableSuplieractual = 0,
+    TableSupliertime = 0,
+    TableSupliersec = 0,
+    TableSuplierflagStopped = false,
+    TableSuplierstate = 0,
+    TableSuplierspeed = 0,
+    TableSuplierspeedTemp = 0,
+    TableSuplierflagPrint = 0,
+    TableSupliersecStop = 0,
+    TableSuplierdeltaRejected = null,
+    TableSuplierONS = false,
+    TableSupliertimeStop = 60, //NOTE: Timestop
+    TableSuplierWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    TableSuplierflagRunning = false;
 var Coderct = null,
     Coderresults = null,
     CntOutCoder = null,
@@ -424,67 +424,67 @@ client1.on('connect', function(err) {
       CntInCoder = joinWord(resp.register[0], resp.register[1]);
       CntOutCoder = joinWord(resp.register[2], resp.register[3]);
       CntOutTableSuplier = CntOutCoder;
-        //------------------------------------------TableSupplier----------------------------------------------
-              TableSupplierct = CntOutTableSupplier // NOTE: igualar al contador de salida
-              if (!TableSupplierONS && TableSupplierct) {
-                TableSupplierspeedTemp = TableSupplierct
-                TableSuppliersec = Date.now()
-                TableSupplierONS = true
-                TableSuppliertime = Date.now()
+        //------------------------------------------TableSuplier----------------------------------------------
+              TableSuplierct = CntOutTableSuplier // NOTE: igualar al contador de salida
+              if (!TableSuplierONS && TableSuplierct) {
+                TableSuplierspeedTemp = TableSuplierct
+                TableSupliersec = Date.now()
+                TableSuplierONS = true
+                TableSupliertime = Date.now()
               }
-              if(TableSupplierct > TableSupplieractual){
-                if(TableSupplierflagStopped){
-                  TableSupplierspeed = TableSupplierct - TableSupplierspeedTemp
-                  TableSupplierspeedTemp = TableSupplierct
-                  TableSuppliersec = Date.now()
-                  TableSupplierdeltaRejected = null
-                  TableSupplierRejectFlag = false
-                  TableSuppliertime = Date.now()
+              if(TableSuplierct > TableSuplieractual){
+                if(TableSuplierflagStopped){
+                  TableSuplierspeed = TableSuplierct - TableSuplierspeedTemp
+                  TableSuplierspeedTemp = TableSuplierct
+                  TableSupliersec = Date.now()
+                  TableSuplierdeltaRejected = null
+                  TableSuplierRejectFlag = false
+                  TableSupliertime = Date.now()
                 }
-                TableSuppliersecStop = 0
-                TableSupplierstate = 1
-                TableSupplierflagStopped = false
-                TableSupplierflagRunning = true
-              } else if( TableSupplierct == TableSupplieractual ){
-                if(TableSuppliersecStop == 0){
-                  TableSuppliertime = Date.now()
-                  TableSuppliersecStop = Date.now()
+                TableSupliersecStop = 0
+                TableSuplierstate = 1
+                TableSuplierflagStopped = false
+                TableSuplierflagRunning = true
+              } else if( TableSuplierct == TableSuplieractual ){
+                if(TableSupliersecStop == 0){
+                  TableSupliertime = Date.now()
+                  TableSupliersecStop = Date.now()
                 }
-                if( ( Date.now() - ( TableSuppliertimeStop * 1000 ) ) >= TableSuppliersecStop ){
-                  TableSupplierspeed = 0
-                  TableSupplierstate = 2
-                  TableSupplierspeedTemp = TableSupplierct
-                  TableSupplierflagStopped = true
-                  TableSupplierflagRunning = false
-                  TableSupplierflagPrint = 1
-                }
-              }
-              TableSupplieractual = TableSupplierct
-              if(Date.now() - 60000 * TableSupplierWorktime >= TableSuppliersec && TableSuppliersecStop == 0){
-                if(TableSupplierflagRunning && TableSupplierct){
-                  TableSupplierflagPrint = 1
-                  TableSuppliersecStop = 0
-                  TableSupplierspeed = TableSupplierct - TableSupplierspeedTemp
-                  TableSupplierspeedTemp = TableSupplierct
-                  TableSuppliersec = Date.now()
+                if( ( Date.now() - ( TableSupliertimeStop * 1000 ) ) >= TableSupliersecStop ){
+                  TableSuplierspeed = 0
+                  TableSuplierstate = 2
+                  TableSuplierspeedTemp = TableSuplierct
+                  TableSuplierflagStopped = true
+                  TableSuplierflagRunning = false
+                  TableSuplierflagPrint = 1
                 }
               }
-              TableSupplierresults = {
-                ST: TableSupplierstate,
-                CPQO : CntOutTableSupplier,
-                SP: TableSupplierspeed
+              TableSuplieractual = TableSuplierct
+              if(Date.now() - 60000 * TableSuplierWorktime >= TableSupliersec && TableSupliersecStop == 0){
+                if(TableSuplierflagRunning && TableSuplierct){
+                  TableSuplierflagPrint = 1
+                  TableSupliersecStop = 0
+                  TableSuplierspeed = TableSuplierct - TableSuplierspeedTemp
+                  TableSuplierspeedTemp = TableSuplierct
+                  TableSupliersec = Date.now()
+                }
               }
-              if (TableSupplierflagPrint == 1) {
-                for (var key in TableSupplierresults) {
-                  if( TableSupplierresults[key] != null && ! isNaN(TableSupplierresults[key]) )
+              TableSuplierresults = {
+                ST: TableSuplierstate,
+                CPQO : CntOutTableSuplier,
+                SP: TableSuplierspeed
+              }
+              if (TableSuplierflagPrint == 1) {
+                for (var key in TableSuplierresults) {
+                  if( TableSuplierresults[key] != null && ! isNaN(TableSuplierresults[key]) )
                   //NOTE: Cambiar path
-                  fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_TableSupplier_l2.log', 'tt=' + TableSuppliertime + ',var=' + key + ',val=' + TableSupplierresults[key] + '\n')
+                  fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_TableSuplier_l2.log', 'tt=' + TableSupliertime + ',var=' + key + ',val=' + TableSuplierresults[key] + '\n')
                 }
-                TableSupplierflagPrint = 0
-                TableSuppliersecStop = 0
-                TableSuppliertime = Date.now()
+                TableSuplierflagPrint = 0
+                TableSupliersecStop = 0
+                TableSupliertime = Date.now()
               }
-        //------------------------------------------TableSupplier----------------------------------------------
+        //------------------------------------------TableSuplier----------------------------------------------
         //------------------------------------------Coder----------------------------------------------
               Coderct = CntOutCoder // NOTE: igualar al contador de salida
               if (!CoderONS && Coderct) {
