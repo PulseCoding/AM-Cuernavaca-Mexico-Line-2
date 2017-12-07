@@ -1243,7 +1243,7 @@ client7.on('connect', function(err) {
       CntInCaseSealer = joinWord(resp.register[6], resp.register[7]);
     });
         //------------------------------------------CaseSealer----------------------------------------------
-              CaseSealerct = CntInCaseSealer // NOTE: igualar al contador de salida
+              CaseSealerct = CntOutCaseSealer // NOTE: igualar al contador de salida
               if (!CaseSealerONS && CaseSealerct) {
                 CaseSealerspeedTemp = CaseSealerct
                 CaseSealersec = Date.now()
@@ -1290,6 +1290,7 @@ client7.on('connect', function(err) {
               CaseSealerresults = {
                 ST: CaseSealerstate,
                 CPQI : CntInCaseSealer,
+                CPQO : CntOutCaseSealer,
                 SP: CaseSealerspeed
               }
               if (CaseSealerflagPrint == 1) {
