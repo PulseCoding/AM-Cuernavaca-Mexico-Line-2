@@ -24,7 +24,7 @@ var TableSupplierct = null,
     TableSupplierdeltaRejected = null,
     TableSupplierONS = false,
     TableSuppliertimeStop = 60, //NOTE: Timestop
-    TableSupplierWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    TableSupplierWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     TableSupplierflagRunning = false;
 var Coderct = null,
     Coderresults = null,
@@ -41,7 +41,7 @@ var Coderct = null,
     CoderdeltaRejected = null,
     CoderONS = false,
     CodertimeStop = 60, //NOTE: Timestop
-    CoderWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    CoderWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     CoderflagRunning = false;
 var Monoblockct = null,
     Monoblockresults = null,
@@ -59,7 +59,7 @@ var Monoblockct = null,
     MonoblockdeltaRejected = null,
     MonoblockONS = false,
     MonoblocktimeStop = 60, //NOTE: Timestop
-    MonoblockWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    MonoblockWorktime = 0.95, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     MonoblockflagRunning = false,
     MonoblockRejectFlag = false,
     MonoblockReject,
@@ -96,7 +96,7 @@ var GasFillerct = null,
     GasFillerdeltaRejected = null,
     GasFillerONS = false,
     GasFillertimeStop = 60, //NOTE: Timestop
-    GasFillerWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    GasFillerWorktime = 0.95, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     GasFillerflagRunning = false,
     GasFillerRejectFlag = false,
     GasFillerReject,
@@ -133,7 +133,7 @@ var Xrayct = null,
     XraydeltaRejected = null,
     XrayONS = false,
     XraytimeStop = 60, //NOTE: Timestop
-    XrayWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    XrayWorktime = 0.95, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     XrayflagRunning = false,
     XrayRejectFlag = false,
     XrayReject,
@@ -170,7 +170,7 @@ var TestBathct = null,
     TestBathdeltaRejected = null,
     TestBathONS = false,
     TestBathtimeStop = 60, //NOTE: Timestop
-    TestBathWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    TestBathWorktime = 0.95, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     TestBathflagRunning = false,
     TestBathRejectFlag = false,
     TestBathReject,
@@ -207,7 +207,7 @@ var Capperct = null,
     CapperdeltaRejected = null,
     CapperONS = false,
     CappertimeStop = 60, //NOTE: Timestop
-    CapperWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    CapperWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     CapperflagRunning = false;
 var Bundlerct = null,
     Bundlerresults = null,
@@ -225,7 +225,7 @@ var Bundlerct = null,
     BundlerdeltaRejected = null,
     BundlerONS = false,
     BundlertimeStop = 60, //NOTE: Timestop
-    BundlerWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    BundlerWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     BundlerflagRunning = false;
 var Dividerct = null,
     Dividerresults = null,
@@ -242,7 +242,7 @@ var Dividerct = null,
     DividerdeltaRejected = null,
     DividerONS = false,
     DividertimeStop = 60, //NOTE: Timestop
-    DividerWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    DividerWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     DividerflagRunning = false;
 var CaseFormerct = null,
     CaseFormerresults = null,
@@ -259,7 +259,7 @@ var CaseFormerct = null,
     CaseFormerdeltaRejected = null,
     CaseFormerONS = false,
     CaseFormertimeStop = 60, //NOTE: Timestop
-    CaseFormerWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    CaseFormerWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     CaseFormerflagRunning = false;
 var CasePackerct = null,
     CasePackerresults = null,
@@ -276,7 +276,7 @@ var CasePackerct = null,
     CasePackerdeltaRejected = null,
     CasePackerONS = false,
     CasePackertimeStop = 60, //NOTE: Timestop
-    CasePackerWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    CasePackerWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     CasePackerflagRunning = false;
 var CaseSealerct = null,
     CaseSealerresults = null,
@@ -294,7 +294,7 @@ var CaseSealerct = null,
     CaseSealerdeltaRejected = null,
     CaseSealerONS = false,
     CaseSealertimeStop = 60, //NOTE: Timestop
-    CaseSealerWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    CaseSealerWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     CaseSealerflagRunning = false;
 var cA1,
     cA2,
@@ -336,7 +336,7 @@ var client4 = modbus.client.tcp.complete({
   'reconnectTimeout' : 30000
 });
 var client5 = modbus.client.tcp.complete({
-  'host': "192.168.10.99",
+  'host': "192.168.10.98",
   'port': 502,
   'autoReconnect': true,
   'timeout': 60000,
