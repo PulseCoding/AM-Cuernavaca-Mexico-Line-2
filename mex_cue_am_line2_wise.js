@@ -336,7 +336,7 @@ var client4 = modbus.client.tcp.complete({
   'reconnectTimeout' : 30000
 });
 var client5 = modbus.client.tcp.complete({
-  'host': "192.168.10.98",
+  'host': "192.168.10.99",
   'port': 502,
   'autoReconnect': true,
   'timeout': 60000,
