@@ -711,13 +711,13 @@ client2.on('connect', function(err) {
 
 });
 client2.on('error', function(err) {
-  fs.appendFileSync('./errorWise2.log','On Error State \n')
+  fs.appendFileSync('./errorWise2.log','tt: '+ Date.now()+ '\tOn Error State \n')
   clearInterval(cA2);
 });
 client2.on('close', function() {
-  fs.appendFileSync('./errorWise2.log','On Close State \n')
+  fs.appendFileSync('./errorWise2.log','tt: '+ Date.now()+ '\tOn Close State \n')
 	clearInterval(cA2);
-  clien2.close()
+  client2.close()
   client2.connect()
 });
 client3.on('connect', function(err) {
@@ -875,11 +875,11 @@ client3.on('connect', function(err) {
   },1000);
 });
 client3.on('error', function(err) {
-  fs.appendFileSync('./errorWise3.log','On Error State \n')
+  fs.appendFileSync('./errorWise3.log','tt: '+ Date.now()+ '\tOn Error State \n')
   clearInterval(cA3);
 });
 client3.on('close', function() {
-  fs.appendFileSync('./errorWise3.log','On Close State \n')
+  fs.appendFileSync('./errorWise3.log','tt: '+ Date.now()+ '\tOn Close State \n')
 	clearInterval(cA3);
   client3.close()
   client3.connect()
