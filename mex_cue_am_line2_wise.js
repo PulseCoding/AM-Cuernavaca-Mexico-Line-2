@@ -554,6 +554,8 @@ client1.on('error', function(err) {
 });
 client1.on('close', function() {
 	clearInterval(cA1);
+    client1.close()
+    client1.connect()
 });
 client2.on('connect', function(err) {
 
@@ -711,11 +713,9 @@ client2.on('connect', function(err) {
 
 });
 client2.on('error', function(err) {
-  fs.appendFileSync('./errorWise2.log','tt: '+ Date.now()+ '\tOn Error State \n')
   clearInterval(cA2);
 });
 client2.on('close', function() {
-  fs.appendFileSync('./errorWise2.log','tt: '+ Date.now()+ '\tOn Close State \n')
 	clearInterval(cA2);
   client2.close()
   client2.connect()
@@ -875,11 +875,9 @@ client3.on('connect', function(err) {
   },1000);
 });
 client3.on('error', function(err) {
-  fs.appendFileSync('./errorWise3.log','tt: '+ Date.now()+ '\tOn Error State \n')
   clearInterval(cA3);
 });
 client3.on('close', function() {
-  fs.appendFileSync('./errorWise3.log','tt: '+ Date.now()+ '\tOn Close State \n')
 	clearInterval(cA3);
   client3.close()
   client3.connect()
@@ -964,6 +962,8 @@ client4.on('error', function(err) {
 });
 client4.on('close', function() {
 	clearInterval(cA4);
+  client4.close()
+  client4.connect()
 });
 client5.on('connect', function(err) {
 
@@ -1164,6 +1164,8 @@ client5.on('error', function(err) {
 });
 client5.on('close', function() {
 	clearInterval(cA5);
+  client5.close()
+  client5.connect()
 });
 client6.on('connect', function(err) {
 
@@ -1241,6 +1243,8 @@ client6.on('error', function(err) {
 });
 client6.on('close', function() {
 	clearInterval(cA6);
+  client6.close()
+  client6.connect()
 });
 client7.on('connect', function(err) {
 
@@ -1327,6 +1331,8 @@ client7.on('error', function(err) {
 });
 client7.on('close', function() {
 	clearInterval(cA7);
+  client7.close()
+  client7.connect()
 });
 
 var noty = setInterval(function(){
