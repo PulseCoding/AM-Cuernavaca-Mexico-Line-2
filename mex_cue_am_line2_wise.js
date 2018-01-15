@@ -296,6 +296,23 @@ var CaseSealerct = null,
     CaseSealertimeStop = 60, //NOTE: Timestop
     CaseSealerWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     CaseSealerflagRunning = false;
+var CheckWeigherct = null,
+    CheckWeigherresults = null,
+    CntInCheckWeigher = null,
+    CntOutCheckWeigher = null,
+    CheckWeigheractual = 0,
+    CheckWeighertime = 0,
+    CheckWeighersec = 0,
+    CheckWeigherflagStopped = false,
+    CheckWeigherstate = 0,
+    CheckWeigherspeed = 0,
+    CheckWeigherspeedTemp = 0,
+    CheckWeigherflagPrint = 0,
+    CheckWeighersecStop = 0,
+    CheckWeigherONS = false,
+    CheckWeighertimeStop = 60, //NOTE: Timestop en segundos
+    CheckWeigherWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+    CheckWeigherflagRunning = false;
 var cA1,
     cA2,
     cA3,
@@ -1251,11 +1268,12 @@ client7.on('connect', function(err) {
   cA7 = setInterval(function(){
     client7.readHoldingRegisters(0, 16).then(function(resp) {
       eol = joinWord(resp.register[0], resp.register[1]);
-      CntOutCaseSealer = joinWord(resp.register[2], resp.register[3]);
+      //CntOutCaseSealer = joinWord(resp.register[2], resp.register[3]);
       CntInCaseSealer = joinWord(resp.register[6], resp.register[7]);
+      CntOutCheckWeigher = joinWord(resp.register[2], resp.register[3]);
     });
         //------------------------------------------CaseSealer----------------------------------------------
-              CaseSealerct = CntOutCaseSealer // NOTE: igualar al contador de salida
+              CaseSealerct = CntInCaseSealer // NOTE: igualar al contador de salida
               if (!CaseSealerONS && CaseSealerct) {
                 CaseSealerspeedTemp = CaseSealerct
                 CaseSealersec = Date.now()
@@ -1302,7 +1320,6 @@ client7.on('connect', function(err) {
               CaseSealerresults = {
                 ST: CaseSealerstate,
                 CPQI : CntInCaseSealer,
-                CPQO : CntOutCaseSealer,
                 SP: CaseSealerspeed
               }
               if (CaseSealerflagPrint == 1) {
@@ -1316,6 +1333,65 @@ client7.on('connect', function(err) {
                 CaseSealertime = Date.now()
               }
         //------------------------------------------CaseSealer----------------------------------------------
+        //------------------------------------------CheckWeigher----------------------------------------------
+              CheckWeigherct = CntOutCheckWeigher // NOTE: igualar al contador de salida
+              if (!CheckWeigherONS && CheckWeigherct) {
+                CheckWeigherspeedTemp = CheckWeigherct
+                CheckWeighersec = Date.now()
+                CheckWeigherONS = true
+                CheckWeighertime = Date.now()
+              }
+              if(CheckWeigherct > CheckWeigheractual){
+                if(CheckWeigherflagStopped){
+                  CheckWeigherspeed = CheckWeigherct - CheckWeigherspeedTemp
+                  CheckWeigherspeedTemp = CheckWeigherct
+                  CheckWeighersec = Date.now()
+                  CheckWeighertime = Date.now()
+                }
+                CheckWeighersecStop = 0
+                CheckWeigherstate = 1
+                CheckWeigherflagStopped = false
+                CheckWeigherflagRunning = true
+              } else if( CheckWeigherct == CheckWeigheractual ){
+                if(CheckWeighersecStop == 0){
+                  CheckWeighertime = Date.now()
+                  CheckWeighersecStop = Date.now()
+                }
+                if( ( Date.now() - ( CheckWeighertimeStop * 1000 ) ) >= CheckWeighersecStop ){
+                  CheckWeigherspeed = 0
+                  CheckWeigherstate = 2
+                  CheckWeigherspeedTemp = CheckWeigherct
+                  CheckWeigherflagStopped = true
+                  CheckWeigherflagRunning = false
+                  CheckWeigherflagPrint = 1
+                }
+              }
+              CheckWeigheractual = CheckWeigherct
+              if(Date.now() - 60000 * CheckWeigherWorktime >= CheckWeighersec && CheckWeighersecStop == 0){
+                if(CheckWeigherflagRunning && CheckWeigherct){
+                  CheckWeigherflagPrint = 1
+                  CheckWeighersecStop = 0
+                  CheckWeigherspeed = CheckWeigherct - CheckWeigherspeedTemp
+                  CheckWeigherspeedTemp = CheckWeigherct
+                  CheckWeighersec = Date.now()
+                }
+              }
+              CheckWeigherresults = {
+                ST: CheckWeigherstate,
+                CPQO: CntOutCheckWeigher,
+                SP: CheckWeigherspeed
+              }
+              if (CheckWeigherflagPrint == 1) {
+                for (var key in CheckWeigherresults) {
+                  if( CheckWeigherresults[key] != null && ! isNaN(CheckWeigherresults[key]) )
+                  //NOTE: Cambiar path
+                  fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_CheckWeigher_l2.log', 'tt=' + CheckWeighertime + ',var=' + key + ',val=' + CheckWeigherresults[key] + '\n')
+                }
+                CheckWeigherflagPrint = 0
+                CheckWeighersecStop = 0
+                CheckWeighertime = Date.now()
+              }
+        //------------------------------------------CheckWeigher----------------------------------------------
               //------------------------------------------EOL----------------------------------------------
               if(secEOL>=60&&eol!=null){
                 fs.appendFileSync("C:/PULSE/AM_L2/L2_LOGS/mex_cue_EOL_l2.log", "tt=" + Date.now() + ",var=EOL" + ",val=" + eol + "\n");
