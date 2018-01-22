@@ -642,7 +642,7 @@ client2.on('connect', function(err) {
                 ST: Monoblockstate,
                 CPQI : CntInMonoblock,
                 CPQO : CntOutMonoblock,
-                //CPQR : MonoblockdeltaRejected,
+                CPQR : MonoblockdeltaRejected,
                 SP: Monoblockspeed
               }
               if (MonoblockflagPrint == 1) {
