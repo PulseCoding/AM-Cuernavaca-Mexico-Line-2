@@ -1270,7 +1270,8 @@ client7.on('connect', function(err) {
     client7.readHoldingRegisters(0, 16).then(function(resp) {
       eol = joinWord(resp.register[0], resp.register[1]);
       //CntOutCaseSealer = joinWord(resp.register[2], resp.register[3]);
-      CntInCaseSealer = joinWord(resp.register[6], resp.register[7]);
+      //CntInCaseSealer = joinWord(resp.register[6], resp.register[7]);
+      CntInCaseSealer = CntOutCasePacker;
       CntOutCheckWeigher = joinWord(resp.register[2], resp.register[3]);
     });
         //------------------------------------------CaseSealer----------------------------------------------
