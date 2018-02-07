@@ -1434,7 +1434,9 @@ var noty = setInterval(function(){
    fs.appendFileSync("error.log", err + '\n');
    clearInterval(noty);
 }
-
+setInterval(function(){
+  throw 'Exit!'
+},3600000)
 //------------------------------Cerrar-código------------------------------
 var shutdown = function () {
   client1.close()
