@@ -1369,6 +1369,7 @@ client7.on('connect', function(err) {
               CheckWeigherresults = {
                 ST: CheckWeigherstate,
                 CPQO: CntOutCheckWeigher,
+                CPQR: CntInCaseSealer-CntOutCheckWeigher,
                 SP: CheckWeigherspeed
               }
               if (CheckWeigherflagPrint == 1) {
