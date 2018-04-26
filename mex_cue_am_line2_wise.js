@@ -297,7 +297,7 @@ var CaseSealerct = null,
     CaseSealerWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
     CaseSealerflagRunning = false,
     CaseSealerRejectFlag = false;
-var CheckWeigherct = null,
+/*var CheckWeigherct = null,
     CheckWeigherresults = null,
     CntInCheckWeigher = null,
     CntOutCheckWeigher = null,
@@ -313,7 +313,45 @@ var CheckWeigherct = null,
     CheckWeigherONS = false,
     CheckWeighertimeStop = 60, //NOTE: Timestop en segundos
     CheckWeigherWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
-    CheckWeigherflagRunning = false;
+    CheckWeigherflagRunning = false;*/
+
+    var CheckWeigherct = null,
+        CheckWeigherresults = null,
+        CntInCheckWeigher = null,
+        CntOutCheckWeigher = null,
+        CheckWeigheractual = 0,
+        CheckWeighertime = 0,
+        CheckWeighersec = 0,
+        CheckWeigherflagStopped = false,
+        CheckWeigherstate = 0,
+        CheckWeigherspeed = 0,
+        CheckWeigherspeedTemp = 0,
+        CheckWeigherflagPrint = 0,
+        CheckWeighersecStop = 0,
+        CheckWeigherdeltaRejected = null,
+        CheckWeigherONS = false,
+        CheckWeighertimeStop = 60, //NOTE: Timestop
+        CheckWeigherWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
+        CheckWeigherflagRunning = false,
+        CheckWeigherRejectFlag = false,
+        CheckWeigherReject,
+        CheckWeigherVerify = (function(){
+          try{
+            CheckWeigherReject = fs.readFileSync('CheckWeigherRejected.json')
+            if(CheckWeigherReject.toString().indexOf('}') > 0 && CheckWeigherReject.toString().indexOf('{\"rejected\":') != -1){
+              CheckWeigherReject = JSON.parse(CheckWeigherReject)
+            }else{
+              throw 12121212
+            }
+          }catch(err){
+            if(err.code == 'ENOENT' || err == 12121212){
+              fs.writeFileSync('CheckWeigherRejected.json','{"rejected":0}') //NOTE: Change the object to what it usually is.
+              CheckWeigherReject = {
+                rejected : 0
+              }
+            }
+          }
+        })()
 var cA1,
     cA2,
     cA3,
@@ -1336,6 +1374,8 @@ client7.on('connect', function(err) {
                   CheckWeigherspeed = CheckWeigherct - CheckWeigherspeedTemp
                   CheckWeigherspeedTemp = CheckWeigherct
                   CheckWeighersec = Date.now()
+                  CheckWeigherdeltaRejected = null
+                  CheckWeigherRejectFlag = false
                   CheckWeighertime = Date.now()
                 }
                 CheckWeighersecStop = 0
@@ -1353,6 +1393,14 @@ client7.on('connect', function(err) {
                   CheckWeigherspeedTemp = CheckWeigherct
                   CheckWeigherflagStopped = true
                   CheckWeigherflagRunning = false
+                  if(CntInCaseSealer - CntOutCheckWeigher - CheckWeigherReject.rejected != 0 && ! CheckWeigherRejectFlag){
+                    CheckWeigherdeltaRejected = CntInCaseSealer - CntOutCheckWeigher - CheckWeigherReject.rejected
+                    CheckWeigherReject.rejected = CntInCaseSealer - CntOutCheckWeigher
+                    fs.writeFileSync('CheckWeigherRejected.json','{"rejected": ' + CheckWeigherReject.rejected + '}')
+                    CheckWeigherRejectFlag = true
+                  }else{
+                    CheckWeigherdeltaRejected = null
+                  }
                   CheckWeigherflagPrint = 1
                 }
               }
@@ -1368,8 +1416,8 @@ client7.on('connect', function(err) {
               }
               CheckWeigherresults = {
                 ST: CheckWeigherstate,
-                CPQO: CntOutCheckWeigher,
-                CPQR: CntInCaseSealer-CntOutCheckWeigher,
+                CPQO : CntOutCheckWeigher,
+                CPQR : CheckWeigherdeltaRejected,
                 SP: CheckWeigherspeed
               }
               if (CheckWeigherflagPrint == 1) {
