@@ -76,7 +76,8 @@ var Monoblockct = null,
 				MonoblockReject = {
 					rejected: null,
 					lastCPQI: null,
-					lastCPQO: null
+					lastCPQO: null,
+					alarm: false
 				}
 			}
 		}
@@ -663,8 +664,14 @@ try {
 					if (CntInMonoblock - CntOutMonoblock - MonoblockReject.rejected != 0 && !MonoblockRejectFlag) {
 						if (MonoblockReject.lastCPQI == CntInMonoblock || MonoblockReject.lastCPQO == CntOutMonoblock) {
 							MonoblockdeltaRejected = null
+							if(!MonoblockReject.alarm) {
+								//Enviar alarma aquí
+								MonoblockReject.alarm = true
+								fs.appendFileSync('alarms.log','Alarm at ' + eval(new Date()).toString() + '\n')
+							}
 						} else {
 							MonoblockdeltaRejected = CntInMonoblock - CntOutMonoblock - MonoblockReject.rejected
+							MonoblockReject.alarm = false
 						}
             MonoblockReject.lastCPQI = CntInMonoblock
             MonoblockReject.lastCPQO = CntOutMonoblock
