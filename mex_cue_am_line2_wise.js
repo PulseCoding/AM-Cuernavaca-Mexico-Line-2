@@ -1370,65 +1370,76 @@ try {
 				CaseSealertime = Date.now()
 			}
 			//------------------------------------------CaseSealer----------------------------------------------
-			//------------------------------------------CheckWeigher----------------------------------------------
-			CheckWeigherct = CntOutCheckWeigher // NOTE: igualar al contador de salida
-			if (!CheckWeigherONS && CheckWeigherct) {
-				CheckWeigherspeedTemp = CheckWeigherct
-				CheckWeighersec = Date.now()
-				CheckWeigherONS = true
-				CheckWeighertime = Date.now()
-			}
-			if (CheckWeigherct > CheckWeigheractual) {
-				if (CheckWeigherflagStopped) {
-					CheckWeigherspeed = CheckWeigherct - CheckWeigherspeedTemp
-					CheckWeigherspeedTemp = CheckWeigherct
-					CheckWeighersec = Date.now()
-					CheckWeighertime = Date.now()
-				}
-				CheckWeighersecStop = 0
-				CheckWeigherstate = 1
-				CheckWeigherflagStopped = false
-				CheckWeigherflagRunning = true
-			} else if (CheckWeigherct == CheckWeigheractual) {
-				if (CheckWeighersecStop == 0) {
-					CheckWeighertime = Date.now()
-					CheckWeighersecStop = Date.now()
-				}
-				if ((Date.now() - (CheckWeighertimeStop * 1000)) >= CheckWeighersecStop) {
-					CheckWeigherspeed = 0
-					CheckWeigherstate = 2
-					CheckWeigherspeedTemp = CheckWeigherct
-					CheckWeigherflagStopped = true
-					CheckWeigherflagRunning = false
-					CheckWeigherflagPrint = 1
-				}
-			}
-			CheckWeigheractual = CheckWeigherct
-			if (Date.now() - 60000 * CheckWeigherWorktime >= CheckWeighersec && CheckWeighersecStop == 0) {
-				if (CheckWeigherflagRunning && CheckWeigherct) {
-					CheckWeigherflagPrint = 1
-					CheckWeighersecStop = 0
-					CheckWeigherspeed = CheckWeigherct - CheckWeigherspeedTemp
-					CheckWeigherspeedTemp = CheckWeigherct
-					CheckWeighersec = Date.now()
-				}
-			}
-			CheckWeigherresults = {
-				ST: CheckWeigherstate,
-				CPQO: CntOutCheckWeigher,
-				SP: CheckWeigherspeed
-			}
-			if (CheckWeigherflagPrint == 1) {
-				for (var key in CheckWeigherresults) {
-					if (CheckWeigherresults[key] != null && !isNaN(CheckWeigherresults[key]))
-						//NOTE: Cambiar path
-						fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_CheckWeigher_l2.log', 'tt=' + CheckWeighertime + ',var=' + key + ',val=' + CheckWeigherresults[key] + '\n')
-				}
-				CheckWeigherflagPrint = 0
-				CheckWeighersecStop = 0
-				CheckWeighertime = Date.now()
-			}
-			//------------------------------------------CheckWeigher----------------------------------------------
+	        //------------------------------------------CheckWeigher----------------------------------------------
+	              CheckWeigherct = CntOutCheckWeigher // NOTE: igualar al contador de salida
+	              if (!CheckWeigherONS && CheckWeigherct) {
+	                CheckWeigherspeedTemp = CheckWeigherct
+	                CheckWeighersec = Date.now()
+	                CheckWeigherONS = true
+	                CheckWeighertime = Date.now()
+	              }
+	              if(CheckWeigherct > CheckWeigheractual){
+	                if(CheckWeigherflagStopped){
+	                  CheckWeigherspeed = CheckWeigherct - CheckWeigherspeedTemp
+	                  CheckWeigherspeedTemp = CheckWeigherct
+	                  CheckWeighersec = Date.now()
+	                  CheckWeigherdeltaRejected = null
+	                  CheckWeigherRejectFlag = false
+	                  CheckWeighertime = Date.now()
+	                }
+	                CheckWeighersecStop = 0
+	                CheckWeigherstate = 1
+	                CheckWeigherflagStopped = false
+	                CheckWeigherflagRunning = true
+	              } else if( CheckWeigherct == CheckWeigheractual ){
+	                if(CheckWeighersecStop == 0){
+	                  CheckWeighertime = Date.now()
+	                  CheckWeighersecStop = Date.now()
+	                }
+	                if( ( Date.now() - ( CheckWeighertimeStop * 1000 ) ) >= CheckWeighersecStop ){
+	                  CheckWeigherspeed = 0
+	                  CheckWeigherstate = 2
+	                  CheckWeigherspeedTemp = CheckWeigherct
+	                  CheckWeigherflagStopped = true
+	                  CheckWeigherflagRunning = false
+	                  if(CntInCaseSealer - CntOutCheckWeigher - CheckWeigherReject.rejected != 0 && ! CheckWeigherRejectFlag){
+	                    CheckWeigherdeltaRejected = CntInCaseSealer - CntOutCheckWeigher - CheckWeigherReject.rejected
+	                    CheckWeigherReject.rejected = CntInCaseSealer - CntOutCheckWeigher
+	                    fs.writeFileSync('CheckWeigherRejected.json','{"rejected": ' + CheckWeigherReject.rejected + '}')
+	                    CheckWeigherRejectFlag = true
+	                  }else{
+	                    CheckWeigherdeltaRejected = null
+	                  }
+	                  CheckWeigherflagPrint = 1
+	                }
+	              }
+	              CheckWeigheractual = CheckWeigherct
+	              if(Date.now() - 60000 * CheckWeigherWorktime >= CheckWeighersec && CheckWeighersecStop == 0){
+	                if(CheckWeigherflagRunning && CheckWeigherct){
+	                  CheckWeigherflagPrint = 1
+	                  CheckWeighersecStop = 0
+	                  CheckWeigherspeed = CheckWeigherct - CheckWeigherspeedTemp
+	                  CheckWeigherspeedTemp = CheckWeigherct
+	                  CheckWeighersec = Date.now()
+	                }
+	              }
+	              CheckWeigherresults = {
+	                ST: CheckWeigherstate,
+	                CPQO : CntOutCheckWeigher,
+	                CPQR : CheckWeigherdeltaRejected,
+	                SP: CheckWeigherspeed
+	              }
+	              if (CheckWeigherflagPrint == 1) {
+	                for (var key in CheckWeigherresults) {
+	                  if( CheckWeigherresults[key] != null && ! isNaN(CheckWeigherresults[key]) )
+	                  //NOTE: Cambiar path
+	                  fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_CheckWeigher_l2.log', 'tt=' + CheckWeighertime + ',var=' + key + ',val=' + CheckWeigherresults[key] + '\n')
+	                }
+	                CheckWeigherflagPrint = 0
+	                CheckWeighersecStop = 0
+	                CheckWeighertime = Date.now()
+	              }
+	        //------------------------------------------CheckWeigher----------------------------------------------
 			//------------------------------------------EOL----------------------------------------------
 			if (secEOL >= 60 && eol != null) {
 				fs.appendFileSync("C:/PULSE/AM_L2/L2_LOGS/mex_cue_EOL_l2.log", "tt=" + Date.now() + ",var=EOL" + ",val=" + eol + "\n");
@@ -1439,161 +1450,6 @@ try {
 			//------------------------------------------EOL----------------------------------------------
 		}, 1000);
 	});
-	client7.on('error', function(err) {
-		clearInterval(cA7);
-	});
-	client7.on('close', function() {
-		clearInterval(cA7);
-	});
-  cA7 = setInterval(function(){
-    client7.readHoldingRegisters(0, 16).then(function(resp) {
-      eol = joinWord(resp.register[0], resp.register[1]);
-      //CntOutCaseSealer = joinWord(resp.register[2], resp.register[3]);
-      //CntInCaseSealer = joinWord(resp.register[6], resp.register[7]);
-      CntInCaseSealer = CntOutCasePacker;
-      CntOutCheckWeigher = joinWord(resp.register[2], resp.register[3]);
-    });
-        //------------------------------------------CaseSealer----------------------------------------------
-              CaseSealerct = CntInCaseSealer // NOTE: igualar al contador de salida
-              if (!CaseSealerONS && CaseSealerct) {
-                CaseSealerspeedTemp = CaseSealerct
-                CaseSealersec = Date.now()
-                CaseSealerONS = true
-                CaseSealertime = Date.now()
-              }
-              if(CaseSealerct > CaseSealeractual){
-                if(CaseSealerflagStopped){
-                  CaseSealerspeed = CaseSealerct - CaseSealerspeedTemp
-                  CaseSealerspeedTemp = CaseSealerct
-                  CaseSealersec = Date.now()
-                  CaseSealerdeltaRejected = null
-                  CaseSealerRejectFlag = false
-                  CaseSealertime = Date.now()
-                }
-                CaseSealersecStop = 0
-                CaseSealerstate = 1
-                CaseSealerflagStopped = false
-                CaseSealerflagRunning = true
-              } else if( CaseSealerct == CaseSealeractual ){
-                if(CaseSealersecStop == 0){
-                  CaseSealertime = Date.now()
-                  CaseSealersecStop = Date.now()
-                }
-                if( ( Date.now() - ( CaseSealertimeStop * 1000 ) ) >= CaseSealersecStop ){
-                  CaseSealerspeed = 0
-                  CaseSealerstate = 2
-                  CaseSealerspeedTemp = CaseSealerct
-                  CaseSealerflagStopped = true
-                  CaseSealerflagRunning = false
-                  CaseSealerflagPrint = 1
-                }
-              }
-              CaseSealeractual = CaseSealerct
-              if(Date.now() - 60000 * CaseSealerWorktime >= CaseSealersec && CaseSealersecStop == 0){
-                if(CaseSealerflagRunning && CaseSealerct){
-                  CaseSealerflagPrint = 1
-                  CaseSealersecStop = 0
-                  CaseSealerspeed = CaseSealerct - CaseSealerspeedTemp
-                  CaseSealerspeedTemp = CaseSealerct
-                  CaseSealersec = Date.now()
-                }
-              }
-              CaseSealerresults = {
-                ST: CaseSealerstate,
-                CPQI : CntInCaseSealer,
-                SP: CaseSealerspeed
-              }
-              if (CaseSealerflagPrint == 1) {
-                for (var key in CaseSealerresults) {
-                  if( CaseSealerresults[key] != null && ! isNaN(CaseSealerresults[key]) )
-                  //NOTE: Cambiar path
-                  fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_CaseSealer_l2.log', 'tt=' + CaseSealertime + ',var=' + key + ',val=' + CaseSealerresults[key] + '\n')
-                }
-                CaseSealerflagPrint = 0
-                CaseSealersecStop = 0
-                CaseSealertime = Date.now()
-              }
-        //------------------------------------------CaseSealer----------------------------------------------
-        //------------------------------------------CheckWeigher----------------------------------------------
-              CheckWeigherct = CntOutCheckWeigher // NOTE: igualar al contador de salida
-              if (!CheckWeigherONS && CheckWeigherct) {
-                CheckWeigherspeedTemp = CheckWeigherct
-                CheckWeighersec = Date.now()
-                CheckWeigherONS = true
-                CheckWeighertime = Date.now()
-              }
-              if(CheckWeigherct > CheckWeigheractual){
-                if(CheckWeigherflagStopped){
-                  CheckWeigherspeed = CheckWeigherct - CheckWeigherspeedTemp
-                  CheckWeigherspeedTemp = CheckWeigherct
-                  CheckWeighersec = Date.now()
-                  CheckWeigherdeltaRejected = null
-                  CheckWeigherRejectFlag = false
-                  CheckWeighertime = Date.now()
-                }
-                CheckWeighersecStop = 0
-                CheckWeigherstate = 1
-                CheckWeigherflagStopped = false
-                CheckWeigherflagRunning = true
-              } else if( CheckWeigherct == CheckWeigheractual ){
-                if(CheckWeighersecStop == 0){
-                  CheckWeighertime = Date.now()
-                  CheckWeighersecStop = Date.now()
-                }
-                if( ( Date.now() - ( CheckWeighertimeStop * 1000 ) ) >= CheckWeighersecStop ){
-                  CheckWeigherspeed = 0
-                  CheckWeigherstate = 2
-                  CheckWeigherspeedTemp = CheckWeigherct
-                  CheckWeigherflagStopped = true
-                  CheckWeigherflagRunning = false
-                  if(CntInCaseSealer - CntOutCheckWeigher - CheckWeigherReject.rejected != 0 && ! CheckWeigherRejectFlag){
-                    CheckWeigherdeltaRejected = CntInCaseSealer - CntOutCheckWeigher - CheckWeigherReject.rejected
-                    CheckWeigherReject.rejected = CntInCaseSealer - CntOutCheckWeigher
-                    fs.writeFileSync('CheckWeigherRejected.json','{"rejected": ' + CheckWeigherReject.rejected + '}')
-                    CheckWeigherRejectFlag = true
-                  }else{
-                    CheckWeigherdeltaRejected = null
-                  }
-                  CheckWeigherflagPrint = 1
-                }
-              }
-              CheckWeigheractual = CheckWeigherct
-              if(Date.now() - 60000 * CheckWeigherWorktime >= CheckWeighersec && CheckWeighersecStop == 0){
-                if(CheckWeigherflagRunning && CheckWeigherct){
-                  CheckWeigherflagPrint = 1
-                  CheckWeighersecStop = 0
-                  CheckWeigherspeed = CheckWeigherct - CheckWeigherspeedTemp
-                  CheckWeigherspeedTemp = CheckWeigherct
-                  CheckWeighersec = Date.now()
-                }
-              }
-              CheckWeigherresults = {
-                ST: CheckWeigherstate,
-                CPQO : CntOutCheckWeigher,
-                CPQR : CheckWeigherdeltaRejected,
-                SP: CheckWeigherspeed
-              }
-              if (CheckWeigherflagPrint == 1) {
-                for (var key in CheckWeigherresults) {
-                  if( CheckWeigherresults[key] != null && ! isNaN(CheckWeigherresults[key]) )
-                  //NOTE: Cambiar path
-                  fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_CheckWeigher_l2.log', 'tt=' + CheckWeighertime + ',var=' + key + ',val=' + CheckWeigherresults[key] + '\n')
-                }
-                CheckWeigherflagPrint = 0
-                CheckWeighersecStop = 0
-                CheckWeighertime = Date.now()
-              }
-        //------------------------------------------CheckWeigher----------------------------------------------
-              //------------------------------------------EOL----------------------------------------------
-              if(secEOL>=60&&eol!=null){
-                fs.appendFileSync("C:/PULSE/AM_L2/L2_LOGS/mex_cue_EOL_l2.log", "tt=" + Date.now() + ",var=EOL" + ",val=" + eol + "\n");
-                secEOL=0;
-              }else{
-                secEOL++;
-              }
-              //------------------------------------------EOL----------------------------------------------
-  },1000);
-});
 client7.on('error', function(err) {
   clearInterval(cA7);
 });
