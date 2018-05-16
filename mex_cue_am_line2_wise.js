@@ -1301,7 +1301,6 @@ try {
 	});
 	client7.on('connect', function(err) {
 
-<<<<<<< HEAD
 		cA7 = setInterval(function() {
 			client7.readHoldingRegisters(0, 16).then(function(resp) {
 				eol = joinWord(resp.register[0], resp.register[1]);
@@ -1446,7 +1445,6 @@ try {
 	client7.on('close', function() {
 		clearInterval(cA7);
 	});
-=======
   cA7 = setInterval(function(){
     client7.readHoldingRegisters(0, 16).then(function(resp) {
       eol = joinWord(resp.register[0], resp.register[1]);
@@ -1602,7 +1600,7 @@ client7.on('error', function(err) {
 client7.on('close', function() {
 	clearInterval(cA7);
 });
->>>>>>> 3928e90267a63578c861dd69a9a0bc9186b5b5fb
+
 
 	var noty = setInterval(function() {
 		if (secPubNub >= 60 * 5) {
