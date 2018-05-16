@@ -73,15 +73,10 @@ var Monoblockct = null,
 			}
 		} catch (err) {
 			if (err.code == 'ENOENT' || err == 12121212) {
-				fs.writeFileSync('MonoblockRejected.json', JSON.stringify({
-					rejected: 0,
-					lastCPQI: 0,
-					lastCPQO: 0
-				}))
 				MonoblockReject = {
-					rejected: 0,
-					lastCPQI: 0,
-					lastCPQO: 0
+					rejected: null,
+					lastCPQI: null,
+					lastCPQO: null
 				}
 			}
 		}
@@ -634,6 +629,12 @@ try {
 				Monoblocksec = Date.now()
 				MonoblockONS = true
 				Monoblocktime = Date.now()
+				if (MonoblockReject.rejected == null) {
+					MonoblockReject.rejected = CntInMonoblock - CntOutMonoblock
+					MonoblockReject.lastCPQI = CntInMonoblock
+					MonoblockReject.lastCPQO = CntOutMonoblock
+				fs.writeFileSync('MonoblockRejected.json', JSON.stringify(MonoblockReject))
+				}
 			}
 			if (Monoblockct > Monoblockactual) {
 				if (MonoblockflagStopped) {
@@ -660,7 +661,11 @@ try {
 					MonoblockflagStopped = true
 					MonoblockflagRunning = false
 					if (CntInMonoblock - CntOutMonoblock - MonoblockReject.rejected != 0 && !MonoblockRejectFlag) {
-						MonoblockdeltaRejected = CntInMonoblock - CntOutMonoblock - MonoblockReject.rejected
+						if (MonoblockReject.lastCPQI == CntInMonoblock || MonoblockReject.lastCPQO == CntOutMonoblock) {
+							MonoblockdeltaRejected = null
+						} else {
+							MonoblockdeltaRejected = CntInMonoblock - CntOutMonoblock - MonoblockReject.rejected
+						}
             MonoblockReject.lastCPQI = CntInMonoblock
             MonoblockReject.lastCPQO = CntOutMonoblock
 						MonoblockReject.rejected = CntInMonoblock - CntOutMonoblock
