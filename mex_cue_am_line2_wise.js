@@ -149,9 +149,11 @@ var Xrayct = null,
 			}
 		} catch (err) {
 			if (err.code == 'ENOENT' || err == 12121212) {
-				fs.writeFileSync('XrayRejected.json', '{"rejected":0}') //NOTE: Change the object to what it usually is.
 				XrayReject = {
-					rejected: 0
+					rejected: null,
+					lastCPQI: null,
+					lastCPQO: null,
+					alarm: false
 				}
 			}
 		}
@@ -676,7 +678,10 @@ try {
 								fs.appendFileSync('alarms.log', 'Alarm delta solved at ' + eval(new Date()).toString() + '\n')
 								MonoblockReject.alarm = false
 								MonoblockdeltaRejected = CntInMonoblock - CntOutMonoblock - MonoblockReject.rejected
+							} else if (MonoblockReject.alarm) {
+								MonoblockdeltaRejected = null
 							} else if (!MonoblockReject.alarm) {
+								//Enviar alarmas
 								fs.appendFileSync('alarms.log', 'Alarm negative delta at ' + eval(new Date()).toString() + '\n')
 								MonoblockReject.alarm = true
 							}
@@ -828,6 +833,13 @@ try {
 				Xraysec = Date.now()
 				XrayONS = true
 				Xraytime = Date.now()
+				if (XrayReject.rejected == null) {
+					XrayReject.rejected = CntInXray - CntOutXray
+					XrayReject.lastCPQI = CntInXray
+					XrayReject.lastCPQO = CntOutXray
+					XrayReject.count = 0
+					fs.writeFileSync('XrayRejected.json', JSON.stringify(XrayReject))
+				}
 			}
 			if (Xrayct > Xrayactual) {
 				if (XrayflagStopped) {
@@ -854,9 +866,42 @@ try {
 					XrayflagStopped = true
 					XrayflagRunning = false
 					if (CntInXray - CntOutXray - XrayReject.rejected != 0 && !XrayRejectFlag) {
-						XraydeltaRejected = CntInXray - CntOutXray - XrayReject.rejected
+						if (XrayReject.lastCPQI == CntInXray || XrayReject.lastCPQO == CntOutXray) {
+							XraydeltaRejected = null
+							if (!XrayReject.alarm) {
+								//Enviar alarma aquí
+								XrayReject.alarm = true
+								fs.appendFileSync('alarms.log', 'Alarm static counters at ' + eval(new Date()).toString() + '\n')
+							}
+						} else if (XrayReject.count > 3) {
+							if ((CntInXray - CntOutXray - XrayReject.rejected) > 0 && Xrayct.alarm) {
+								//Desactivar alamras
+								fs.appendFileSync('alarms.log', 'Alarm delta solved at ' + eval(new Date()).toString() + '\n')
+								XrayReject.alarm = false
+								XraydeltaRejected = CntInXray - CntOutXray - XrayReject.rejected
+							} else if (XrayReject.alarm) {
+								XraydeltaRejected = null
+							} else if (!XrayReject.alarm) {
+								//Enviar alarmas
+								fs.appendFileSync('alarms.log', 'Alarm negative delta at ' + eval(new Date()).toString() + '\n')
+								XrayReject.alarm = true
+							}
+						} else {
+							XraydeltaRejected = CntInXray - CntOutXray - XrayReject.rejected
+							if (XraydeltaRejected < 0) {
+								XrayReject.count++
+							}
+							if (Xrayct.alarm) {
+								//Desactivar alarma
+								fs.appendFileSync('alarms.log', 'Alarm statis sensors solved at ' + eval(new Date()).toString() + '\n')
+								XrayReject.alarm = false
+							}
+						}
+						XrayReject.lastCPQI = CntInXray
+						XrayReject.lastCPQO = CntOutXray
 						XrayReject.rejected = CntInXray - CntOutXray
-						fs.writeFileSync('XrayRejected.json', '{"rejected": ' + XrayReject.rejected + '}')
+						fs.appendFileSync('test.log', JSON.stringify(XrayReject) + '\n')
+						fs.writeFileSync('XrayRejected.json', JSON.stringify(XrayReject))
 						XrayRejectFlag = true
 					} else {
 						XraydeltaRejected = null
