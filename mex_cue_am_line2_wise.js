@@ -664,7 +664,7 @@ try {
             MonoblockReject.lastCPQI = CntInMonoblock
             MonoblockReject.lastCPQO = CntOutMonoblock
 						MonoblockReject.rejected = CntInMonoblock - CntOutMonoblock
-						console.log(MonoblockReject)
+						fs.appendFileSync('test.log',JSON.stringify(MonoblockReject) + '\n')
 						fs.writeFileSync('MonoblockRejected.json', JSON.stringify(MonoblockReject))
 						MonoblockRejectFlag = true
 					} else {
