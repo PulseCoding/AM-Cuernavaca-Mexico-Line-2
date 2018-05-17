@@ -677,6 +677,7 @@ try {
 								//Desactivar alamras
 								fs.appendFileSync('alarms.log', 'Alarm delta solved at ' + eval(new Date()).toString() + '\n')
 								MonoblockReject.alarm = false
+								MonoblockReject.count = 0
 								MonoblockdeltaRejected = CntInMonoblock - CntOutMonoblock - MonoblockReject.rejected
 							} else if (MonoblockReject.alarm) {
 								MonoblockdeltaRejected = null
@@ -878,6 +879,7 @@ try {
 								//Desactivar alamras
 								fs.appendFileSync('alarms.log', 'Alarm delta solved at ' + eval(new Date()).toString() + '\n')
 								XrayReject.alarm = false
+								XrayReject.count = 0
 								XraydeltaRejected = CntInXray - CntOutXray - XrayReject.rejected
 							} else if (XrayReject.alarm) {
 								XraydeltaRejected = null
