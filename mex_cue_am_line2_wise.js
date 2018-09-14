@@ -1243,7 +1243,7 @@ try {
 
 							//NOTE: Cambiar path
 							fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_TestBath_l2.log', 'tt=' + TestBathtime + ',var=' + key + ',val=' + TestBathresults[key] + '\n')
-							fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_TestBath_l2.log', 'tt=' + TestBathtime + ',var=' + key + ',val=' + TestBathresults[key] + '\n')
+							//fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_TestBath_l2.log', 'tt=' + TestBathtime + ',var=' + key + ',val=' + TestBathresults[key] + '\n')
 					}
 				}
 				TestBathflagPrint = 0
