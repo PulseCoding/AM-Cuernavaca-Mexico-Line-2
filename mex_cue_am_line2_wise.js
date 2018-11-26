@@ -737,7 +737,7 @@ function joinWord(num1, num2) {
 				ST: GasFillerstate,
 				CPQI: CntInGasFiller,
 				CPQO: CntOutGasFiller,
-				CPQR: GasFillerdeltaRejected,
+				//CPQR: GasFillerdeltaRejected,
 				SP: GasFillerspeed
 			}
 			if (GasFillerflagPrint == 1) {
