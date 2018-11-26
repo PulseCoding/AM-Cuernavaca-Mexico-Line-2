@@ -297,101 +297,6 @@ var CaseSealerct = null,
 	CaseSealerWorktime = 0.98, //NOTE: Intervalo de tiempo en minutos para actualizar el log
 	CaseSealerflagRunning = false,
 	CaseSealerRejectFlag = false;
-/*var CheckWeigherct = null,
-    CheckWeigherresults = null,
-    CntInCheckWeigher = null,
-    CntOutCheckWeigher = null,
-    CheckWeigheractual = 0,
-    CheckWeighertime = 0,
-    CheckWeighersec = 0,
-    CheckWeigherflagStopped = false,
-    CheckWeigherstate = 0,
-    CheckWeigherspeed = 0,
-    CheckWeigherspeedTemp = 0,
-    CheckWeigherflagPrint = 0,
-    CheckWeighersecStop = 0,
-    CheckWeigherONS = false,
-    CheckWeighertimeStop = 60, //NOTE: Timestop en segundos
-    CheckWeigherWorktime = 0.99, //NOTE: Intervalo de tiempo en minutos para actualizar el log
-    CheckWeigherflagRunning = false;*/
-var MachineTestSecondct = null,
-	MachineTestSecondresults = null,
-	CntInMachineTestSecond = null,
-	CntOutMachineTestSecond = null,
-	MachineTestSecondactual = 0,
-	MachineTestSecondtime = 0,
-	MachineTestSecondsec = 0,
-	MachineTestSecondflagStopped = false,
-	MachineTestSecondstate = 0,
-	MachineTestSecondspeed = 0,
-	MachineTestSecondspeedTemp = 0,
-	MachineTestSecondflagPrint = 0,
-	MachineTestSecondsecStop = 0,
-	MachineTestSeconddeltaRejected = null,
-	MachineTestSecondONS = false,
-	MachineTestSecondtimeStop = 90, //NOTE: Timestop
-	MachineTestSecondWorktime = 0.95, //NOTE: Intervalo de tiempo en minutos para actualizar el log
-	MachineTestSecondflagRunning = false,
-	MachineTestSecondRejectFlag = false,
-	MachineTestSecondReject = {},
-	MachineTestSecondVerify = (function() {
-		try {
-			MachineTestSecondReject = fs.readFileSync('MachineTestSecondRejected.json')
-			if (MachineTestSecondReject.toString().indexOf('}') > 0 && MachineTestSecondReject.toString().indexOf('{\"rejected\":') != -1) {
-				MachineTestSecondReject = JSON.parse(MachineTestSecondReject)
-			} else {
-				throw 12121212
-			}
-		} catch (err) {
-			if (err.code == 'ENOENT' || err == 12121212) {
-				MachineTestSecondReject = {
-					rejected: null,
-					lastCPQI: null,
-					lastCPQO: null,
-					alarm: false
-				}
-			}
-		}
-	})();
-	var MachineTestFirstct = null,
-		MachineTestFirstresults = null,
-		CntInMachineTestFirst = null,
-		CntOutMachineTestFirst = null,
-		MachineTestFirstactual = 0,
-		MachineTestFirsttime = 0,
-		MachineTestFirstsec = 0,
-		MachineTestFirstflagStopped = false,
-		MachineTestFirststate = 0,
-		MachineTestFirstspeed = 0,
-		MachineTestFirstspeedTemp = 0,
-		MachineTestFirstflagPrint = 0,
-		MachineTestFirstsecStop = 0,
-		MachineTestFirstdeltaRejected = null,
-		MachineTestFirstONS = false,
-		MachineTestFirsttimeStop = 90, //NOTE: Timestop
-		MachineTestFirstWorktime = 0.95, //NOTE: Intervalo de tiempo en minutos para actualizar el log
-		MachineTestFirstflagRunning = false,
-		MachineTestFirstRejectFlag = false,
-		MachineTestFirstReject = {},
-		MachineTestFirstVerify = (function() {
-			try {
-				MachineTestFirstReject = fs.readFileSync('MachineTestFirstRejected.json')
-				if (MachineTestFirstReject.toString().indexOf('}') > 0 && MachineTestFirstReject.toString().indexOf('{\"rejected\":') != -1) {
-					MachineTestFirstReject = JSON.parse(MachineTestFirstReject)
-				} else {
-					throw 12121212
-				}
-			} catch (err) {
-				if (err.code == 'ENOENT' || err == 12121212) {
-					MachineTestFirstReject = {
-						rejected: null,
-						lastCPQI: null,
-						lastCPQO: null,
-						alarm: false
-					}
-				}
-			}
-		})();
 var CheckWeigherct = null,
 	CheckWeigherresults = null,
 	CntInCheckWeigher = null,
@@ -540,8 +445,6 @@ function joinWord(num1, num2) {
 	return parseInt(bits, 2);
 }
 
-try {
-
 	client1.connect();
 	client2.connect();
 	client3.connect();
@@ -614,7 +517,6 @@ try {
 								//NOTE: Cambiar path
 								fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_TableSuplier_l2.log', 'tt=' + TableSupliertime + ',var=' + key + ',val=' + TableSuplierresults[key] + '\n')
 									//NOTE: Cambiar path
-									fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_TableSuplier_l2.log', 'tt=' + TableSupliertime + ',var=' + key + ',val=' + TableSuplierresults[key] + '\n')
 						}
 					}
 					TableSuplierflagPrint = 0
@@ -679,7 +581,6 @@ try {
 								//NOTE: Cambiar path
 								fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_Coder_l2.log', 'tt=' + Codertime + ',var=' + key + ',val=' + Coderresults[key] + '\n')
 									//NOTE: Cambiar path
-									fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_Coder_l2.log', 'tt=' + Codertime + ',var=' + key + ',val=' + Coderresults[key] + '\n')
 						}
 					}
 					CoderflagPrint = 0
@@ -779,122 +680,6 @@ try {
 				Monoblocktime = Date.now()
 			}
 			//------------------------------------------Monoblock----------------------------------------------
-						//------------------------------------------MachineTestFirst----------------------------------------------
-						MachineTestFirstct = CntOutMachineTestFirst // NOTE: igualar al contador de salida
-						if (!MachineTestFirstONS && MachineTestFirstct) {
-							MachineTestFirstspeedTemp = MachineTestFirstct
-							MachineTestFirstsec = Date.now()
-							MachineTestFirstONS = true
-							MachineTestFirsttime = Date.now()
-							if (MachineTestFirstReject.rejected == null) {
-								MachineTestFirstReject.rejected = CntInMachineTestFirst - CntOutMachineTestFirst
-								MachineTestFirstReject.lastCPQI = CntInMachineTestFirst
-								MachineTestFirstReject.lastCPQO = CntOutMachineTestFirst
-								MachineTestFirstReject.count = 0
-								fs.writeFileSync('MachineTestFirstRejected.json', JSON.stringify(MachineTestFirstReject))
-							}
-						}
-						if (MachineTestFirstct > MachineTestFirstactual) {
-							if (MachineTestFirstflagStopped) {
-								MachineTestFirstspeed = MachineTestFirstct - MachineTestFirstspeedTemp
-								MachineTestFirstspeedTemp = MachineTestFirstct
-								MachineTestFirstsec = Date.now()
-								MachineTestFirstdeltaRejected = null
-								MachineTestFirstRejectFlag = false
-								MachineTestFirsttime = Date.now()
-							}
-							MachineTestFirstsecStop = 0
-							MachineTestFirststate = 1
-							MachineTestFirstflagStopped = false
-							MachineTestFirstflagRunning = true
-						} else if (MachineTestFirstct == MachineTestFirstactual) {
-							if (MachineTestFirstsecStop == 0) {
-								MachineTestFirsttime = Date.now()
-								MachineTestFirstsecStop = Date.now()
-							}
-							if ((Date.now() - (MachineTestFirsttimeStop * 1000)) >= MachineTestFirstsecStop) {
-								//MachineTestFirstspeed = 0
-								MachineTestFirststate = 2
-								MachineTestFirstspeedTemp = MachineTestFirstct
-								MachineTestFirstflagStopped = true
-								MachineTestFirstflagRunning = false
-								if (CntInMachineTestFirst - CntOutMachineTestFirst - MachineTestFirstReject.rejected != 0 && !MachineTestFirstRejectFlag) {
-									if (MachineTestFirstReject.lastCPQI == CntInMachineTestFirst || MachineTestFirstReject.lastCPQO == CntOutMachineTestFirst) {
-										MachineTestFirstdeltaRejected = null
-										if (!MachineTestFirstReject.alarm) {
-											//Enviar alarma aquí
-											MachineTestFirstReject.alarm = true
-										}
-									} else if (MachineTestFirstReject.count > 3) {
-										if ((CntInMachineTestFirst - CntOutMachineTestFirst - MachineTestFirstReject.rejected) > 0 && MachineTestFirstReject.alarm) {
-											//Desactivar alamras
-											fs.appendFileSync('alarms.log', 'Alarm delta solved MachineTestFirst at ' + eval(new Date()).toString() + '\n')
-											MachineTestFirstReject.alarm = false
-											MachineTestFirstReject.count = 0
-											MachineTestFirstdeltaRejected = CntInMachineTestFirst - CntOutMachineTestFirst - MachineTestFirstReject.rejected
-										} else if (MachineTestFirstReject.alarm) {
-											MachineTestFirstdeltaRejected = null
-										} else if (!MachineTestFirstReject.alarm) {
-											//Enviar alarmas
-											MachineTestFirstReject.alarm = true
-										}
-									} else {
-										MachineTestFirstdeltaRejected = CntInMachineTestFirst - CntOutMachineTestFirst - MachineTestFirstReject.rejected
-										if (MachineTestFirstdeltaRejected < 0) {
-											MachineTestFirstReject.count++
-											MachineTestFirstReject.alarm = false
-										}
-										if (MachineTestFirstReject.alarm) {
-											//Desactivar alarma
-											MachineTestFirstReject.count = 0
-											fs.appendFileSync('alarms.log', 'Alarm statis sensors solved MachineTestFirst at ' + eval(new Date()).toString() + '\n')
-											MachineTestFirstReject.alarm = false
-										}
-									}
-									MachineTestFirstReject.lastCPQI = CntInMachineTestFirst
-									MachineTestFirstReject.lastCPQO = CntOutMachineTestFirst
-									MachineTestFirstReject.rejected = CntInMachineTestFirst - CntOutMachineTestFirst
-									fs.appendFileSync('test.log', JSON.stringify(MachineTestFirstReject) + '\n')
-									fs.writeFileSync('MachineTestFirstRejected.json', JSON.stringify(MachineTestFirstReject))
-									MachineTestFirstRejectFlag = true
-								} else {
-									MachineTestFirstdeltaRejected = null
-								}
-								MachineTestFirstflagPrint = 1
-							}
-						}
-						MachineTestFirstactual = MachineTestFirstct
-						if (Date.now() - 60000 * MachineTestFirstWorktime >= MachineTestFirstsec && MachineTestFirstsecStop == 0) {
-							if (MachineTestFirstflagRunning && MachineTestFirstct) {
-								MachineTestFirstflagPrint = 1
-								MachineTestFirstsecStop = 0
-								MachineTestFirstspeed = MachineTestFirstct - MachineTestFirstspeedTemp
-								MachineTestFirstspeedTemp = MachineTestFirstct
-								MachineTestFirstsec = Date.now()
-							}
-						}
-						MachineTestFirstresults = {
-							ST: MachineTestFirststate,
-							CPQI: CntInMachineTestFirst,
-							CPQO: CntOutMachineTestFirst,
-							CPQR: MachineTestFirstdeltaRejected,
-							SP: MachineTestFirstspeed
-						}
-						if (MachineTestFirstflagPrint == 1) {
-							for (var key in MachineTestFirstresults) {
-								if (MachineTestFirstresults[key] != null && !isNaN(MachineTestFirstresults[key]))
-									//NOTE: Cambiar path
-									fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_Monoblock_l2.log', 'tt=' + MachineTestFirsttime + ',var=' + key + ',val=' + MachineTestFirstresults[key] + '\n')
-							}
-							MachineTestFirstReject.lastCPQI = CntInMachineTestFirst
-							MachineTestFirstReject.lastCPQO = CntOutMachineTestFirst
-							MachineTestFirstReject.rejected = CntInMachineTestFirst - CntOutMachineTestFirst
-							fs.writeFileSync('MachineTestFirstRejected.json', JSON.stringify(MachineTestFirstReject))
-							MachineTestFirstflagPrint = 0
-							MachineTestFirstsecStop = 0
-							MachineTestFirsttime = Date.now()
-						}
-						//------------------------------------------MachineTestFirst----------------------------------------------
 			//------------------------------------------GasFiller----------------------------------------------
 			GasFillerct = CntOutGasFiller // NOTE: igualar al contador de salida
 			if (!GasFillerONS && GasFillerct) {
@@ -1061,122 +846,7 @@ try {
 				Xraytime = Date.now()
 			}
 			//------------------------------------------Xray----------------------------------------------
-						//------------------------------------------MachineTestSecond----------------------------------------------
-						MachineTestSecondct = CntOutMachineTestSecond // NOTE: igualar al contador de salida
-						if (!MachineTestSecondONS && MachineTestSecondct) {
-							MachineTestSecondspeedTemp = MachineTestSecondct
-							MachineTestSecondsec = Date.now()
-							MachineTestSecondONS = true
-							MachineTestSecondtime = Date.now()
-							if (MachineTestSecondReject.rejected == null) {
-								MachineTestSecondReject.rejected = CntInMachineTestSecond - CntOutMachineTestSecond
-								MachineTestSecondReject.lastCPQI = CntInMachineTestSecond
-								MachineTestSecondReject.lastCPQO = CntOutMachineTestSecond
-								MachineTestSecondReject.count = 0
-								fs.writeFileSync('MachineTestSecondRejected.json', JSON.stringify(MachineTestSecondReject))
-							}
-						}
-						if (MachineTestSecondct > MachineTestSecondactual) {
-							if (MachineTestSecondflagStopped) {
-								MachineTestSecondspeed = MachineTestSecondct - MachineTestSecondspeedTemp
-								MachineTestSecondspeedTemp = MachineTestSecondct
-								MachineTestSecondsec = Date.now()
-								MachineTestSeconddeltaRejected = null
-								MachineTestSecondRejectFlag = false
-								MachineTestSecondtime = Date.now()
-							}
-							MachineTestSecondsecStop = 0
-							MachineTestSecondstate = 1
-							MachineTestSecondflagStopped = false
-							MachineTestSecondflagRunning = true
-						} else if (MachineTestSecondct == MachineTestSecondactual) {
-							if (MachineTestSecondsecStop == 0) {
-								MachineTestSecondtime = Date.now()
-								MachineTestSecondsecStop = Date.now()
-							}
-							if ((Date.now() - (MachineTestSecondtimeStop * 1000)) >= MachineTestSecondsecStop) {
-								//MachineTestSecondspeed = 0
-								MachineTestSecondstate = 2
-								MachineTestSecondspeedTemp = MachineTestSecondct
-								MachineTestSecondflagStopped = true
-								MachineTestSecondflagRunning = false
-								if (CntInMachineTestSecond - CntOutMachineTestSecond - MachineTestSecondReject.rejected != 0 && !MachineTestSecondRejectFlag) {
-									if (MachineTestSecondReject.lastCPQI == CntInMachineTestSecond || MachineTestSecondReject.lastCPQO == CntOutMachineTestSecond) {
-										MachineTestSeconddeltaRejected = null
-										if (!MachineTestSecondReject.alarm) {
-											//Enviar alarma aquí
-											MachineTestSecondReject.alarm = true
-										}
-									} else if (MachineTestSecondReject.count > 3) {
-										if ((CntInMachineTestSecond - CntOutMachineTestSecond - MachineTestSecondReject.rejected) > 0 && MachineTestSecondReject.alarm) {
-											//Desactivar alamras
-											fs.appendFileSync('alarms.log', 'Alarm delta solved MachineTestSecond at ' + eval(new Date()).toString() + '\n')
-											MachineTestSecondReject.alarm = false
-											MachineTestSecondReject.count = 0
-											MachineTestSeconddeltaRejected = CntInMachineTestSecond - CntOutMachineTestSecond - MachineTestSecondReject.rejected
-										} else if (MachineTestSecondReject.alarm) {
-											MachineTestSeconddeltaRejected = null
-										} else if (!MachineTestSecondReject.alarm) {
-											//Enviar alarmas
-											MachineTestSecondReject.alarm = true
-										}
-									} else {
-										MachineTestSeconddeltaRejected = CntInMachineTestSecond - CntOutMachineTestSecond - MachineTestSecondReject.rejected
-										if (MachineTestSeconddeltaRejected < 0) {
-											MachineTestSecondReject.count++
-											MachineTestSecondReject.alarm = false
-										}
-										if (MachineTestSecondReject.alarm) {
-											//Desactivar alarma
-											MachineTestSecondReject.count = 0
-											fs.appendFileSync('alarms.log', 'Alarm statis sensors solved MachineTestSecond at ' + eval(new Date()).toString() + '\n')
-											MachineTestSecondReject.alarm = false
-										}
-									}
-									MachineTestSecondReject.lastCPQI = CntInMachineTestSecond
-									MachineTestSecondReject.lastCPQO = CntOutMachineTestSecond
-									MachineTestSecondReject.rejected = CntInMachineTestSecond - CntOutMachineTestSecond
-									fs.appendFileSync('test.log', JSON.stringify(MachineTestSecondReject) + '\n')
-									fs.writeFileSync('MachineTestSecondRejected.json', JSON.stringify(MachineTestSecondReject))
-									MachineTestSecondRejectFlag = true
-								} else {
-									MachineTestSeconddeltaRejected = null
-								}
-								MachineTestSecondflagPrint = 1
-							}
-						}
-						MachineTestSecondactual = MachineTestSecondct
-						if (Date.now() - 60000 * MachineTestSecondWorktime >= MachineTestSecondsec && MachineTestSecondsecStop == 0) {
-							if (MachineTestSecondflagRunning && MachineTestSecondct) {
-								MachineTestSecondflagPrint = 1
-								MachineTestSecondsecStop = 0
-								MachineTestSecondspeed = MachineTestSecondct - MachineTestSecondspeedTemp
-								MachineTestSecondspeedTemp = MachineTestSecondct
-								MachineTestSecondsec = Date.now()
-							}
-						}
-						MachineTestSecondresults = {
-							ST: MachineTestSecondstate,
-							CPQI: CntInMachineTestSecond,
-							CPQO: CntOutMachineTestSecond,
-							CPQR: MachineTestSeconddeltaRejected,
-							SP: MachineTestSecondspeed
-						}
-						if (MachineTestSecondflagPrint == 1) {
-							for (var key in MachineTestSecondresults) {
-								if (MachineTestSecondresults[key] != null && !isNaN(MachineTestSecondresults[key]))
-									//NOTE: Cambiar path
-									fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_Xray_l2.log', 'tt=' + MachineTestSecondtime + ',var=' + key + ',val=' + MachineTestSecondresults[key] + '\n')
-							}
-							MachineTestSecondReject.lastCPQI = CntInMachineTestSecond
-							MachineTestSecondReject.lastCPQO = CntOutMachineTestSecond
-							MachineTestSecondReject.rejected = CntInMachineTestSecond - CntOutMachineTestSecond
-							fs.writeFileSync('MachineTestSecondRejected.json', JSON.stringify(MachineTestSecondReject))
-							MachineTestSecondflagPrint = 0
-							MachineTestSecondsecStop = 0
-							MachineTestSecondtime = Date.now()
-						}
-						//------------------------------------------MachineTestSecond----------------------------------------------
+
 			//------------------------------------------TestBath----------------------------------------------
 			TestBathct = CntOutTestBath // NOTE: igualar al contador de salida
 			if (!TestBathONS && TestBathct) {
@@ -1326,7 +996,6 @@ try {
 
 							//NOTE: Cambiar path
 							fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_Capper_l2.log', 'tt=' + Cappertime + ',var=' + key + ',val=' + Capperresults[key] + '\n')
-							fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_Capper_l2.log', 'tt=' + Cappertime + ',var=' + key + ',val=' + Capperresults[key] + '\n')
 					}
 				}
 				CapperflagPrint = 0
@@ -1408,7 +1077,6 @@ try {
 
 							//NOTE: Cambiar path
 							fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_Divider_l2.log', 'tt=' + Dividertime + ',var=' + key + ',val=' + Dividerresults[key] + '\n')
-							fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_Divider_l2.log', 'tt=' + Dividertime + ',var=' + key + ',val=' + Dividerresults[key] + '\n')
 					}
 				}
 				DividerflagPrint = 0
@@ -1470,7 +1138,6 @@ try {
 				for (var key in CaseFormerresults) {
 					if (CaseFormerresults[key] != null && !isNaN(CaseFormerresults[key])) {
 							fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_CaseFormer_l2.log', 'tt=' + CaseFormertime + ',var=' + key + ',val=' + CaseFormerresults[key] + '\n')
-							fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_CaseFormer_l2.log', 'tt=' + CaseFormertime + ',var=' + key + ',val=' + CaseFormerresults[key] + '\n')
 					}
 				}
 				CaseFormerflagPrint = 0
@@ -1534,7 +1201,6 @@ try {
 
 							//NOTE: Cambiar path
 							fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_CasePacker_l2.log', 'tt=' + CasePackertime + ',var=' + key + ',val=' + CasePackerresults[key] + '\n')
-							fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_CasePacker_l2.log', 'tt=' + CasePackertime + ',var=' + key + ',val=' + CasePackerresults[key] + '\n')
 					}
 				}
 				CasePackerflagPrint = 0
@@ -1614,7 +1280,6 @@ try {
 
 							//NOTE: Cambiar path
 							fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_Bundler_l2.log', 'tt=' + Bundlertime + ',var=' + key + ',val=' + Bundlerresults[key] + '\n')
-							fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_Bundler_l2.log', 'tt=' + Bundlertime + ',var=' + key + ',val=' + Bundlerresults[key] + '\n')
 					}
 				}
 				BundlerflagPrint = 0
@@ -1698,7 +1363,6 @@ try {
 							fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_CaseSealer_l2.log', 'tt=' + CaseSealertime + ',var=' + key + ',val=' + CaseSealerresults[key] + '\n')
 
 								//NOTE: Cambiar path
-								fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_CaseSealer_l2.log', 'tt=' + CaseSealertime + ',var=' + key + ',val=' + CaseSealerresults[key] + '\n')
 					}
 				}
 				CaseSealerflagPrint = 0
@@ -1772,7 +1436,6 @@ try {
 							//NOTE: Cambiar path
 							fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_CheckWeigher_l2.log', 'tt=' + CheckWeighertime + ',var=' + key + ',val=' + CheckWeigherresults[key] + '\n')
 								//NOTE: Cambiar path
-								fs.appendFileSync('C:/PULSE/AM_L2/L2_FAKE/mex_cue_CheckWeigher_l2.log', 'tt=' + CheckWeighertime + ',var=' + key + ',val=' + CheckWeigherresults[key] + '\n')
 					}
 				}
 				CheckWeigherflagPrint = 0
@@ -1783,7 +1446,6 @@ try {
 			//------------------------------------------EOL----------------------------------------------
 			if (secEOL >= 60 && eol != null) {
 				fs.appendFileSync("C:/PULSE/AM_L2/L2_LOGS/mex_cue_EOL_l2.log", "tt=" + Date.now() + ",var=EOL" + ",val=" + eol + "\n");
-				fs.appendFileSync("C:/PULSE/AM_L2/L2_FAKE/mex_cue_EOL_l2.log", "tt=" + Date.now() + ",var=EOL" + ",val=" + eol + "\n");
 				secEOL = 0;
 			} else {
 				secEOL++;
@@ -1816,10 +1478,7 @@ try {
 			secPubNub++;
 		}
 	}, 1000);
-} catch (err) {
-	fs.appendFileSync("error.log", err + '\n');
-	clearInterval(noty);
-}
+
 
 //------------------------------Cerrar-código------------------------------
 var shutdown = function() {
@@ -1830,6 +1489,7 @@ var shutdown = function() {
 	client5.close()
 	client6.close()
 	client7.close()
+	clearInterval(noty)
 	process.exit(0)
 }
 
