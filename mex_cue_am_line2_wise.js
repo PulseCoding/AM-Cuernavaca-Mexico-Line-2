@@ -584,7 +584,7 @@ try {
 						TableSupliersecStop = Date.now()
 					}
 					if ((Date.now() - (TableSupliertimeStop * 1000)) >= TableSupliersecStop) {
-						TableSuplierspeed = 0
+						//TableSuplierspeed = 0
 						TableSuplierstate = 2
 						TableSuplierspeedTemp = TableSuplierct
 						TableSuplierflagStopped = true
@@ -649,7 +649,7 @@ try {
 						CodersecStop = Date.now()
 					}
 					if ((Date.now() - (CodertimeStop * 1000)) >= CodersecStop) {
-						Coderspeed = 0
+						//Coderspeed = 0
 						Coderstate = 2
 						CoderspeedTemp = Coderct
 						CoderflagStopped = true
@@ -735,7 +735,7 @@ try {
 					MonoblocksecStop = Date.now()
 				}
 				if ((Date.now() - (MonoblocktimeStop * 1000)) >= MonoblocksecStop) {
-					Monoblockspeed = 0
+					//Monoblockspeed = 0
 					Monoblockstate = 2
 					MonoblockspeedTemp = Monoblockct
 					MonoblockflagStopped = true
@@ -813,7 +813,7 @@ try {
 								MachineTestFirstsecStop = Date.now()
 							}
 							if ((Date.now() - (MachineTestFirsttimeStop * 1000)) >= MachineTestFirstsecStop) {
-								MachineTestFirstspeed = 0
+								//MachineTestFirstspeed = 0
 								MachineTestFirststate = 2
 								MachineTestFirstspeedTemp = MachineTestFirstct
 								MachineTestFirstflagStopped = true
@@ -922,7 +922,7 @@ try {
 					GasFillersecStop = Date.now()
 				}
 				if ((Date.now() - (GasFillertimeStop * 1000)) >= GasFillersecStop) {
-					GasFillerspeed = 0
+					//GasFillerspeed = 0
 					GasFillerstate = 2
 					GasFillerspeedTemp = GasFillerct
 					GasFillerflagStopped = true
@@ -1017,7 +1017,7 @@ try {
 					XraysecStop = Date.now()
 				}
 				if ((Date.now() - (XraytimeStop * 1000)) >= XraysecStop) {
-					Xrayspeed = 0
+					//Xrayspeed = 0
 					Xraystate = 2
 					XrayspeedTemp = Xrayct
 					XrayflagStopped = true
@@ -1095,7 +1095,7 @@ try {
 								MachineTestSecondsecStop = Date.now()
 							}
 							if ((Date.now() - (MachineTestSecondtimeStop * 1000)) >= MachineTestSecondsecStop) {
-								MachineTestSecondspeed = 0
+								//MachineTestSecondspeed = 0
 								MachineTestSecondstate = 2
 								MachineTestSecondspeedTemp = MachineTestSecondct
 								MachineTestSecondflagStopped = true
@@ -1204,7 +1204,7 @@ try {
 					TestBathsecStop = Date.now()
 				}
 				if ((Date.now() - (TestBathtimeStop * 1000)) >= TestBathsecStop) {
-					TestBathspeed = 0
+					//TestBathspeed = 0
 					TestBathstate = 2
 					TestBathspeedTemp = TestBathct
 					TestBathflagStopped = true
@@ -1295,7 +1295,7 @@ try {
 					CappersecStop = Date.now()
 				}
 				if ((Date.now() - (CappertimeStop * 1000)) >= CappersecStop) {
-					Capperspeed = 0
+					//Capperspeed = 0
 					Capperstate = 2
 					CapperspeedTemp = Capperct
 					CapperflagStopped = true
@@ -1379,7 +1379,7 @@ try {
 					DividersecStop = Date.now()
 				}
 				if ((Date.now() - (DividertimeStop * 1000)) >= DividersecStop) {
-					Dividerspeed = 0
+					//Dividerspeed = 0
 					Dividerstate = 2
 					DividerspeedTemp = Dividerct
 					DividerflagStopped = true
@@ -1443,7 +1443,7 @@ try {
 					CaseFormersecStop = Date.now()
 				}
 				if ((Date.now() - (CaseFormertimeStop * 1000)) >= CaseFormersecStop) {
-					CaseFormerspeed = 0
+					//CaseFormerspeed = 0
 					CaseFormerstate = 2
 					CaseFormerspeedTemp = CaseFormerct
 					CaseFormerflagStopped = true
@@ -1505,7 +1505,7 @@ try {
 					CasePackersecStop = Date.now()
 				}
 				if ((Date.now() - (CasePackertimeStop * 1000)) >= CasePackersecStop) {
-					CasePackerspeed = 0
+					//CasePackerspeed = 0
 					CasePackerstate = 2
 					CasePackerspeedTemp = CasePackerct
 					CasePackerflagStopped = true
@@ -1584,7 +1584,7 @@ try {
 					BundlersecStop = Date.now()
 				}
 				if ((Date.now() - (BundlertimeStop * 1000)) >= BundlersecStop) {
-					Bundlerspeed = 0
+					//Bundlerspeed = 0
 					Bundlerstate = 2
 					BundlerspeedTemp = Bundlerct
 					BundlerflagStopped = true
@@ -1667,7 +1667,7 @@ try {
 					CaseSealersecStop = Date.now()
 				}
 				if ((Date.now() - (CaseSealertimeStop * 1000)) >= CaseSealersecStop) {
-					CaseSealerspeed = 0
+					//CaseSealerspeed = 0
 					CaseSealerstate = 2
 					CaseSealerspeedTemp = CaseSealerct
 					CaseSealerflagStopped = true
@@ -1733,7 +1733,7 @@ try {
 					CheckWeighersecStop = Date.now()
 				}
 				if ((Date.now() - (CheckWeighertimeStop * 1000)) >= CheckWeighersecStop) {
-					CheckWeigherspeed = 0
+					//CheckWeigherspeed = 0
 					CheckWeigherstate = 2
 					CheckWeigherspeedTemp = CheckWeigherct
 					CheckWeigherflagStopped = true
