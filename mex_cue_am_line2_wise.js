@@ -345,57 +345,57 @@ var client1 = modbus.client.tcp.complete({
 	'host': "192.168.10.95",
 	'port': 502,
 	'autoReconnect': true,
-	'timeout': 60000,
+	'timeout': 6000,
 	'logEnabled': true,
-	'reconnectTimeout': 30000
+	'reconnectTimeout': 20000
 });
 var client2 = modbus.client.tcp.complete({
 	'host': "192.168.10.96",
 	'port': 502,
 	'autoReconnect': true,
-	'timeout': 60000,
+	'timeout': 6000,
 	'logEnabled': true,
-	'reconnectTimeout': 30000
+	'reconnectTimeout': 20000
 });
 var client3 = modbus.client.tcp.complete({
 	'host': "192.168.10.97",
 	'port': 502,
 	'autoReconnect': true,
-	'timeout': 60000,
+	'timeout': 6000,
 	'logEnabled': true,
-	'reconnectTimeout': 30000
+	'reconnectTimeout': 20000
 });
 var client4 = modbus.client.tcp.complete({
 	'host': "192.168.10.98",
 	'port': 502,
 	'autoReconnect': true,
-	'timeout': 60000,
+	'timeout': 6000,
 	'logEnabled': true,
-	'reconnectTimeout': 30000
+	'reconnectTimeout': 20000
 });
 var client5 = modbus.client.tcp.complete({
 	'host': "192.168.10.99",
 	'port': 502,
 	'autoReconnect': true,
-	'timeout': 60000,
+	'timeout': 6000,
 	'logEnabled': true,
-	'reconnectTimeout': 30000
+	'reconnectTimeout': 20000
 });
 var client6 = modbus.client.tcp.complete({
 	'host': "192.168.10.100",
 	'port': 502,
 	'autoReconnect': true,
-	'timeout': 60000,
+	'timeout': 6000,
 	'logEnabled': true,
-	'reconnectTimeout': 30000
+	'reconnectTimeout': 20000
 });
 var client7 = modbus.client.tcp.complete({
 	'host': "192.168.10.101",
 	'port': 502,
 	'autoReconnect': true,
-	'timeout': 60000,
+	'timeout': 6000,
 	'logEnabled': true,
-	'reconnectTimeout': 30000
+	'reconnectTimeout': 20000
 });
 var secEOL = 0;
 var secPubNub = 60 * 4 + 55;
