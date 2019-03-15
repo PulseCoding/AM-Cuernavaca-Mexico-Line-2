@@ -600,8 +600,8 @@ client2.on('connect', function(err) {
 
   cA2 = setInterval(function() {
     client2.readHoldingRegisters(0, 16).then(function(resp) {
-      CntInMonoblock = joinWord(resp.register[0], resp.register[1]);
-      CntOutMonoblock = joinWord(resp.register[2], resp.register[3]);
+      CntInMonoblock = joinWord(resp.register[2], resp.register[3]);
+      CntOutMonoblock = joinWord(resp.register[0], resp.register[1]);
       MonoblockWait = joinWord(resp.register[4], resp.register[5]);
       CntInGasFiller = CntOutMonoblock;
       CntOutGasFiller = CntInXray;
