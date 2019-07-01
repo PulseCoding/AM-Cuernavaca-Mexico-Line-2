@@ -1459,8 +1459,8 @@ function getRejects() {
   CheckWeigherReject.rejected = CheckWeigherDif
   fs.writeFileSync('CheckWeigherRejected.json', '{"rejected": ' + CheckWeigherReject.rejected + '}')
 }
-setTimeout(getRejects,60000);
-var storeReject = setInterval(getRejects, 1740000);
+//setTimeout(getRejects,60000);
+//var storeReject = setInterval(getRejects, 1740000);
 //------------------------------Cerrar-código------------------------------
 var shutdown = function() {
   client1.close()
