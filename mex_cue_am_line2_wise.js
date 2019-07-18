@@ -458,7 +458,7 @@ client1.on('connect', function(err) {
     client1.readHoldingRegisters(0, 16).then(function(resp) {
       CntInCoder = joinWord(resp.register[0], resp.register[1]);
       CntOutCoder = joinWord(resp.register[2], resp.register[3]);
-      CntOutTableSuplier = CntOutCoder;
+      CntOutTableSuplier = CntInCoder;
       //------------------------------------------TableSuplier----------------------------------------------
       TableSuplierct = CntOutTableSuplier // NOTE: igualar al contador de salida
       if (!TableSuplierONS && TableSuplierct) {
