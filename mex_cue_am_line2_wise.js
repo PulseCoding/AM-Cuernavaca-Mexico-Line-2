@@ -1437,7 +1437,7 @@ var noty = setInterval(function() {
   }
 }, 1000);
 
-function getRejects() {
+/*function getRejects() {
   var MonoblockDif = CntInMonoblock - CntOutMonoblock
   fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_Monoblock_l2.log', 'tt=' + Date.now() + ',var=CPQR,val=' + eval(MonoblockDif - MonoblockReject.rejected) + '\n')
   MonoblockReject.rejected = MonoblockDif
@@ -1458,7 +1458,7 @@ function getRejects() {
   fs.appendFileSync('C:/PULSE/AM_L2/L2_LOGS/mex_cue_CheckWeigher_l2.log', 'tt=' + Date.now() + ',var=CPQR,val=' + eval(CheckWeigherDif - CheckWeigherReject.rejected) + '\n')
   CheckWeigherReject.rejected = CheckWeigherDif
   fs.writeFileSync('CheckWeigherRejected.json', '{"rejected": ' + CheckWeigherReject.rejected + '}')
-}
+}*/
 //setTimeout(getRejects,60000);
 //var storeReject = setInterval(getRejects, 1740000);
 //------------------------------Cerrar-código------------------------------
